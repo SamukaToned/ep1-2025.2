@@ -1,17 +1,22 @@
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 public class AgendamentoDeConsultas {
     private Medico medico;
     private Paciente paciente;
-    //definir data e hora depois de ver sobre localdatetime
+    private String horarioConsulta;
+    private static final DateTimeFormatter formatter = 
+    DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:");
     private String local;
     private int status; // 1 é cancelada, 2 concluida e 3 agendada. O status é sempre tido como agendado a priori default. 
-
+    //não terminei essa parte, ainda tá faltando coisa.
     public AgendamentoDeConsultas(Paciente paciente, Medico medico, String local, int status){
         this.paciente=paciente;
         this.medico=medico;
         this.local=local;
         this.status=status;
     }
+    
 
     public String getlocal(String local){
         return local;
