@@ -8,6 +8,10 @@ public class Medico extends Pessoa{
         super(nome, cpf);
     }
 
+    public Medico(String especialidade){
+        this.especialidade=especialidade;
+    }
+
     @Override
     public void mostrarDados() {
         System.out.println("O nome é: " + getNome() + "cpf é: " + getCpf() + " o crm é: " + crm + "e a especialidade é: " + especialidade);
