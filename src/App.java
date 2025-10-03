@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class App {
     static Scanner scan = new Scanner(System.in);
@@ -8,7 +9,8 @@ public class App {
         int choice2=0;
         boolean isRunning=true;
         System.out.printf("************************************\nSistema de Gerenciamento Hospitalar\n************************************\n");
-        while (isRunning) {
+        try {
+            while (isRunning) {
                 System.out.println("O Usuário é: ");
                 System.out.printf("1 - Médico\n2 - Paciente\n 3 - Sair\n");
                 choice1=scan.nextInt();
@@ -20,10 +22,10 @@ public class App {
                     default -> System.out.println("Valor Inválido");
                     
             }
-
-            
         }
-
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Digite um número inteiro.");
+        }
 
     }
     public static void menuMedico(boolean isRunning, int choice2){
@@ -44,7 +46,7 @@ public class App {
             case 6 -> cadastroMedico.listaMedicos();
             case 7 -> {System.out.println("Saindo...");
             isRunning=false; isChoosing=false;}
-            default -> {System.out.println("Valor Invalido");}
+            default -> {System.out.println("Valor Inválido");}
             }
     
         }
