@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🏥 Trabalho Prático – Sistema de Gerenciamento Hospitalar  
 
 ### 🎯 Objetivo  
