@@ -1,6 +1,5 @@
 public class Paciente extends Pessoa {
     private int idade;
-    private int numeroDeConsultas;
     private String[] historicoDeConsultas;
     public Paciente(){
         this.idade = 0;
