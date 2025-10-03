@@ -4,6 +4,6 @@ public class especializacao {
     private String especss;
     public void adicionarEspecs(String especcs){
         especs.add(especcs);
-//to mal, hj só vai dar isso msm, amanhã tento fazer mais
+//vou ter q ver isso aqui tb
     }
 }

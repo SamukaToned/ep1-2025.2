@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 public class Medico extends Pessoa{
     private String crm;
     private String especialidade;
@@ -10,7 +9,6 @@ public class Medico extends Pessoa{
     DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private String horarioDispon;
     private ArrayList<LocalDateTime> horarios = new ArrayList<>();
-    Scanner scanner = new Scanner(System.in);
     
     public Medico(){
         this.crm="";
@@ -34,19 +32,19 @@ public class Medico extends Pessoa{
     }
     @Override
     public void mostrarDados() {
-        System.out.println("O nome é: " + getNome() + "cpf é: " + getCpf() + " o crm é: " + getCrm(crm) + "e a especialidade é: " + getEspecialidade(especialidade));
+        System.out.println("O nome é: " + getNome() + "cpf é: " + getCpf() + " o crm é: " + getCrm() + "e a especialidade é: " + getEspecialidade());
     }
 
-    public String getEspecialidade(String especialidade){
-        return this.especialidade;
+    public String getEspecialidade(){
+        return especialidade;
     }
 
-    public String getCrm(String crm){
-        return this.crm;
+    public String getCrm(){
+        return crm;
     }
 
-    public double getCustoDaConsulta(double custoDaConsulta){
-        return this.custoDaConsulta;
+    public double getCustoDaConsulta(){
+        return custoDaConsulta;
     }
 
     public void setCustoDaConsulta(double custoDaConsulta){
@@ -58,3 +56,4 @@ public class Medico extends Pessoa{
     }
 }
 
+//ainda terei de ver sobre tempo provavelmente
