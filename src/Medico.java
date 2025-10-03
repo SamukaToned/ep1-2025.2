@@ -30,10 +30,6 @@ public class Medico extends Pessoa{
         LocalDateTime horario = LocalDateTime.parse(horarioDispon, formatter);
         horarios.add(horario);
     }
-    @Override
-    public void mostrarDados() {
-        System.out.println("O nome é: " + getNome() + "cpf é: " + getCpf() + " o crm é: " + getCrm() + "e a especialidade é: " + getEspecialidade());
-    }
 
     public String getEspecialidade(){
         return especialidade;
@@ -53,6 +49,18 @@ public class Medico extends Pessoa{
 
     public ArrayList<LocalDateTime> getHorarios(){
         return horarios;
+    }
+
+    @Override
+    public String toString(){
+        return "***************" +
+        "Nome: " + getNome() +
+        "\nCPF: " + getCpf() +
+        "\nCRM" + getCrm() + 
+        "\nEspecialidade" + getEspecialidade() + 
+        "\nCusto de Consulta: R$" + custoDaConsulta + 
+        "\nHorários: " + horarioDispon +
+        "***************";
     }
 }
 

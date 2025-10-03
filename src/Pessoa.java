@@ -17,9 +17,6 @@ public abstract class Pessoa {
     return nome;}
     public String getCpf() {
     return cpf;}
-    
-
-    public abstract void mostrarDados();
 }
 
     

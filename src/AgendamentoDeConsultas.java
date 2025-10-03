@@ -22,16 +22,8 @@ public class AgendamentoDeConsultas {
         return local;
     }
 
-    public void setLocal(String local){
-        this.local=local;
-    }
-
     public int getStatus(int status){
         return status;
-    }
-
-    public void setStatus(int status){
-        this.status=status;
     }
 
     public void agendamento(Paciente paciente, Medico medico, String local, int status){
