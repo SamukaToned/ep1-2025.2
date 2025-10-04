@@ -12,6 +12,7 @@ public class Consultas {
     private int escolha;
     Scanner scan = new Scanner(System.in);
     boolean isConsulting=true;
+    CadastroMedico cadastroMedico = new CadastroMedico();
 
     public void AgendamentodeConsultas(){
         while (isConsulting) {
@@ -19,17 +20,50 @@ public class Consultas {
             System.out.printf("\n1 - OFTAMOLOGIA\n2 - PEDIATRIA\n3 - DERMATOLOGIA\n4 - CARDIOLOGIA\n5 - PSIQUIATRIA\n6 - NEUROLOGIA\n7 - ORTOPEDIA\n");
             System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n");
             escolha = scan.nextInt();
+
+            ArrayList<Medico> medicos = cadastroMedico.getMedicos();
             switch (escolha) {
-                //falta os switch case ai, faz o que falta pq depois de ja ter melhorado o cadastro fica mais de boa, mas tem que testar ainda 
-                
-                default:System.out.println("Valor Inválido");
+                case 1 -> verificarMedicosEspecialidade(medicos, Especializacao.OFTAMOLOGIA);
+                case 2 -> verificarMedicosEspecialidade(medicos, Especializacao.PEDIATRIA);
+                case 3 -> verificarMedicosEspecialidade(medicos, Especializacao.DERMATOLOGIA);
+                case 4 -> verificarMedicosEspecialidade(medicos, Especializacao.CARDIOLOGIA);
+                case 5 -> verificarMedicosEspecialidade(medicos, Especializacao.PSIQUIATRIA);
+                case 6 -> verificarMedicosEspecialidade(medicos, Especializacao.NEUROLOGIA);
+                case 7 -> verificarMedicosEspecialidade(medicos, Especializacao.ORTOPEDIA);
+                case 8 -> verificarMedicosEspecialidade(medicos, Especializacao.GASTROENTOLOGIA);
+                case 9 -> verificarMedicosEspecialidade(medicos, Especializacao.GINECOLOGIA);
+                case 10 -> verificarMedicosEspecialidade(medicos, Especializacao.ONCOLOGIA);
+                case 11 -> verificarMedicosEspecialidade(medicos, Especializacao.UROLOGIA);
+                case 12 -> verificarMedicosEspecialidade(medicos, Especializacao.ENDOCRINOLGIA);
+                case 13 -> verificarMedicosEspecialidade(medicos, Especializacao.HEMATOLOGIA);
+                default -> System.out.println("Valor Inválido");
                     
             }
         }
     }
-    public void agendamentoMedico(Medico medico){
-        if (medico.getEspecialidade().equals(medico)) {
-            
+ 
+    private void verificarMedicosEspecialidade(ArrayList<Medico> medicos, Especializacao especialidade){
+        boolean isFound = false;
+        for(Medico medico : medicos){
+            if (medico.getEspecialidade()==especialidade) {
+                System.out.println("Médico disponível" + medico);
+                isFound=true;
+                int choice3=0;
+                System.out.println("Realizar consulta com o " + medico.getNome() + "?" + "0 - Sim / 1 - Não");
+                choice3 = scan.nextInt();
+                if(choice3==0){
+                
+                
+
+                }
+
+                }
+
+            }
+            if (isFound==false) {
+            System.out.println("Nenhum médico foi especialista da área de " + especialidade + " trabalha nesse hospital.");
+        } 
         }
+                          
     }
-}
+// falta ainda fazer coisa do plano de saude e o fim da consulta, não é tanto mais ainda quebrarei cabeça

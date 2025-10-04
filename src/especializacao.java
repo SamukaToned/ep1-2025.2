@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 public enum Especializacao {
+
     OFTAMOLOGIA, 
     PEDIATRIA,
     DERMATOLOGIA,
@@ -12,4 +14,6 @@ public enum Especializacao {
     UROLOGIA, 
     ENDOCRINOLGIA,
     HEMATOLOGIA;
+
+     ArrayList<Especializacao> especialidades = new ArrayList<>();
 }

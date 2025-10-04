@@ -53,14 +53,14 @@ public class Medico extends Pessoa{
 
     @Override
     public String toString(){
-        return "***************" +
+        return "***************\n" +
         "Nome: " + getNome() +
         "\nCPF: " + getCpf() +
         "\nCRM" + getCrm() + 
         "\nEspecialidade" + getEspecialidade() + 
         "\nCusto de Consulta: R$" + custoDaConsulta + 
         "\nHorários: " + horarioDispon +
-        "***************";
+        "\n***************";
     }
 }
 
