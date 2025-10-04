@@ -6,9 +6,10 @@ public enum Especializacao {
     PSIQUIATRIA, 
     NEUROLOGIA,
     ORTOPEDIA,
-    GASTROENTOLOGIA;
-
-
-    
-    
+    GASTROENTOLOGIA,
+    GINECOLOGIA,
+    ONCOLOGIA, 
+    UROLOGIA, 
+    ENDOCRINOLGIA,
+    HEMATOLOGIA;
 }

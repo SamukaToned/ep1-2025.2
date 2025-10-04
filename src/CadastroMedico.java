@@ -11,12 +11,12 @@ public class CadastroMedico {
             String nome;
             String cpf;
             String crm;
-            String especialidade;
+            Especializacao especialidade = null;
+            String especialidadeValor;
             double custo;
             String horario;
             int escolha;
             int evitarSpaceNome=0;
-            
             if (evitarSpaceNome!=0) {
                 scan.nextLine();
             }
@@ -27,8 +27,20 @@ public class CadastroMedico {
             cpf = scan.nextLine();
             System.out.printf("\nCRM: ");
             crm = scan.nextLine();
-            System.out.printf("\nEspecialidade: ");
-            especialidade = scan.nextLine().toUpperCase();
+            boolean especialidadeisntValid = true;
+            while (especialidadeisntValid) {
+                System.out.printf("\nEspecialidade: ");
+                especialidadeValor=scan.nextLine().toUpperCase();
+                try {
+                    especialidade = Especializacao.valueOf(especialidadeValor);
+                    especialidadeisntValid = false;
+                } catch (IllegalArgumentException e){
+                    System.out.println("O Hospital não possui funcionários com a especialidade " + especialidadeValor + ", temos médicos especializados nas a seguir: ");
+                    for(Especializacao especializacao : Especializacao.values()){
+                        System.out.println(" - " + especializacao);
+                    }
+                }
+            }
             System.out.printf("\nCusto da Consulta: ");
             custo = scan.nextDouble();
             scan.nextLine();
@@ -54,3 +66,4 @@ public class CadastroMedico {
         }
     }
 }
+//tem que testar ainda se funcionou, faça mais exceptions dps

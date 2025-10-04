@@ -3,21 +3,21 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class Medico extends Pessoa{
     private String crm;
-    private String especialidade;
     private double custoDaConsulta;
     private static final DateTimeFormatter formatter = 
     DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private String horarioDispon;
     private ArrayList<LocalDateTime> horarios = new ArrayList<>();
+    private Especializacao especialidade;
     
     public Medico(){
         this.crm="";
-        this.especialidade="";
+        this.especialidade=null;
         this.custoDaConsulta=0;
         this.horarioDispon="";
     }
 
-    public Medico(String nome, String cpf, String crm, String especialidade, double custoDaConsulta, String horarioDispon){
+    public Medico(String nome, String cpf, String crm, Especializacao especialidade, double custoDaConsulta, String horarioDispon){
         super(nome, cpf);
         this.crm=crm;
         this.especialidade=especialidade;
@@ -31,7 +31,7 @@ public class Medico extends Pessoa{
         horarios.add(horario);
     }
 
-    public String getEspecialidade(){
+    public Especializacao getEspecialidade(){
         return especialidade;
     }
 
