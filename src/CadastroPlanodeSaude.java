@@ -22,13 +22,39 @@ public class CadastroPlanodeSaude {
                 System.out.println("ID do Plano (2 digitos): ");
                 idPlano=scan.nextLine();
                 System.out.println("Descontos para áreas da saúde: ");
+                int i = 0;
                 for(Especializacao especialidade : especialidades){
-                    int i = 0;
                     i++;
-                    //agora eu ia fazer o desconto para cada especialidade
+                    System.out.println(especialidade + "Desconto: %");
+                    desconto[i]=scan.nextDouble();
+                }
+                i=0;
+                if (paciente.getIdade() > 60) {
+                    for(i=0; i<13; i++){
+                        desconto[i]*=2;
+                    }
+                }
+
+            } else{
+                nomePlano="Não cadastrado";
+                idPlano="Não cadastrado;";
+                for(int i=0; i<13; i++){
+                    desconto[i]=0;
                 }
             }
         }
     }
+    String getNomePlano(String nomePlano){
+        return nomePlano;
+    }
+
+    String getID(String idPlano){
+        return idPlano;
+    }
+
+    double[] getDesconto(double[] desconto){
+        return desconto;
+    }
+
 
 }

@@ -1,30 +1,30 @@
 import java.util.ArrayList;
 public class PlanoDeSaude {
-    private int desconto;
-    private String especializacao;
-    private String tipoDePlano;
-    ArrayList<String> especs = new ArrayList<>();
-    //em algum momento adicionarei os tipos de especializacoes do projeto no geral
+    CadastroPlanodeSaude cadastroPlanodeSaude = new CadastroPlanodeSaude();
+    private ArrayList<PlanoDeSaude> planos = new ArrayList();
+    private String nomePlano;
+    private String idPlano;
+    private double[] desconto;
 
-    PlanoDeSaude(String tipoDePlano, String especializacao){
-        this.tipoDePlano=tipoDePlano;
-        this.especializacao=especializacao;
+    PlanoDeSaude(String nomePlano, String idPlano, double[] desconto){
+        this.nomePlano=cadastroPlanodeSaude.getNomePlano(nomePlano);
+        this.idPlano=cadastroPlanodeSaude.getID(idPlano);
+        this.desconto=cadastroPlanodeSaude.getDesconto(desconto);
+    }
+    
+    String getNomePlano(String nomePlano){
+        return nomePlano;
+    }
+    
+    String getIdPlano(String idPlano){
+        return idPlano;
     }
 
-    public String getEspecializacao(String especializacao){
-        return especializacao;}
-
-    public void setEspecializacao(String especializacao){
-        this.especializacao=especializacao;}
-
-    public String getTipoDePlano(String tipoDePlano){
-        return tipoDePlano;}
-    
-    public void setTipoDePlano(String tipoDePlano){
-        this.tipoDePlano=tipoDePlano;}
-
-    public int tipoDeDesconto(int desconto, String especializacao){
-    //vai ter haver com o tipo de espec, mas ainda vou pensar cm farei o tipo de espec
+    double[] getDesconto(double[] desconto){
         return desconto;
+    }
+
+    public ArrayList<PlanoDeSaude> getPlanos(){
+        return planos;
     }
 }
