@@ -4,6 +4,7 @@ public class App {
     static Scanner scan = new Scanner(System.in);
     static CadastroMedico cadastroMedico = new CadastroMedico();
     static CadastroPaciente cadastroPaciente = new CadastroPaciente();
+    static Consultas consultas = new Consultas();
     public static void main(String[] args){
         int choice1;
         int choice2=0;
@@ -62,7 +63,7 @@ public class App {
         choice2=scan.nextInt();
         switch (choice2) {
             case 1 -> cadastroPaciente.cadastroPaciente();
-            case 2 -> System.out.println("Realizar uma Consulta");
+            case 2 -> consultas.EscolhaConsultas();
             case 3 -> System.out.println("Agendar uma Internação");
             case 4 -> System.out.println("Acessar Histórico de Consultas");
             case 5 -> System.out.println(" Cadastrar um Plano de Saúde");

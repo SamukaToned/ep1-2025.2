@@ -7,20 +7,20 @@ public class PlanoDeSaude {
     private double[] desconto;
 
     PlanoDeSaude(String nomePlano, String idPlano, double[] desconto){
-        this.nomePlano=cadastroPlanodeSaude.getNomePlano(nomePlano);
-        this.idPlano=cadastroPlanodeSaude.getID(idPlano);
-        this.desconto=cadastroPlanodeSaude.getDesconto(desconto);
+        this.nomePlano=cadastroPlanodeSaude.getNomePlano();
+        this.idPlano=cadastroPlanodeSaude.getID();
+        this.desconto=cadastroPlanodeSaude.getDesconto();
     }
     
-    String getNomePlano(String nomePlano){
+    String getNomePlano(){
         return nomePlano;
     }
     
-    String getIdPlano(String idPlano){
+    String getIdPlano(){
         return idPlano;
     }
 
-    double[] getDesconto(double[] desconto){
+    double[] getDesconto(){
         return desconto;
     }
 

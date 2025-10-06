@@ -1,13 +1,11 @@
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 public class Medico extends Pessoa{
     private String crm;
     private double custoDaConsulta;
-    private static final DateTimeFormatter formatter = 
-    DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
     private String horarioDispon;
-    private ArrayList<LocalDateTime> horarios = new ArrayList<>();
+    private ArrayList<LocalTime> horarios = new ArrayList<>();
     private Especializacao especialidade;
     
     public Medico(){
@@ -26,8 +24,11 @@ public class Medico extends Pessoa{
     }
 
 
-    public void adicionarHorarios(String horariosDispon){
-        LocalDateTime horario = LocalDateTime.parse(horarioDispon, formatter);
+    public void adicionarHorario(String horarioDispon) {
+        int hora = Integer.parseInt(horarioDispon.split(":")[0]);
+        int minuto = Integer.parseInt(horarioDispon.split(":")[1]);
+
+        LocalTime horario = LocalTime.of(hora, minuto);
         horarios.add(horario);
     }
 
@@ -47,7 +48,7 @@ public class Medico extends Pessoa{
         this.custoDaConsulta=custoDaConsulta;
     }
 
-    public ArrayList<LocalDateTime> getHorarios(){
+    public ArrayList<LocalTime> getHorarios(){
         return horarios;
     }
 

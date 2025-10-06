@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class CadastroPlanodeSaude {
     Scanner scan = new Scanner(System.in);
-    Paciente paciente = new Paciente();
+    Paciente pacientee;
     String nomePlano;
     String idPlano;
     String cpf;
@@ -44,15 +44,15 @@ public class CadastroPlanodeSaude {
             }
         }
     }
-    String getNomePlano(String nomePlano){
+    String getNomePlano(){
         return nomePlano;
     }
 
-    String getID(String idPlano){
+    String getID(){
         return idPlano;
     }
 
-    double[] getDesconto(double[] desconto){
+    double[] getDesconto(){
         return desconto;
     }
 

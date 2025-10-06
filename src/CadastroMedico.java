@@ -44,8 +44,11 @@ public class CadastroMedico {
             System.out.printf("\nCusto da Consulta: ");
             custo = scan.nextDouble();
             scan.nextLine();
-            System.out.printf("\nHorarios: ");
-            horario=scan.nextLine();
+            System.out.printf("\nHorarios: (Digite 0 quando acabar os horários.)");
+            do {
+                horario=scan.nextLine();
+                medico.adicionarHorario(horario);
+            }while (horario!="0");
             this.medicos.add(new Medico(nome, cpf, crm, especialidade, custo, horario));
             System.out.println("Você deseja continuar? 0 - Sim / 1 - Não");
             escolha = scan.nextInt();
