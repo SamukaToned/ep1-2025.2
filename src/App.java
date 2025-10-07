@@ -4,12 +4,13 @@ public class App {
     static Scanner scan = new Scanner(System.in);
     static CadastroMedico cadastroMedico = new CadastroMedico();
     static CadastroPaciente cadastroPaciente = new CadastroPaciente();
-    static Consultas consultas = new Consultas();
+    static Consultas consultas = new Consultas(cadastroPaciente, cadastroMedico);
     public static void main(String[] args){
         int choice1;
         int choice2=0;
         boolean isRunning=true;
         System.out.printf("************************************\nSistema de Gerenciamento Hospitalar\n************************************\n");
+        
         try {
             while (isRunning) {
                 System.out.println("O Usuário é: ");
@@ -21,8 +22,7 @@ public class App {
                     case 3 -> {System.out.println("Saindo...");
                     isRunning=false;}
                     default -> System.out.println("Valor Inválido");
-                    
-            }
+                }        
         }
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Digite um número inteiro.");
@@ -59,7 +59,7 @@ public class App {
         System.out.println("Menu Paciente");
         System.out.println("*************");
         System.out.println("Digite o que deseja fazer:");
-        System.out.printf("1 - Cadastro\n 2 - Realizar uma Consulta\n 3 - Agendar uma Internação\n 4 - Acessar Histórico de Consultas\n 5 - Cadastrar um Plano de Saúde\n 6 - Sair\n");
+        System.out.printf("1 - Cadastro\n 2 - Realizar uma Consulta\n 3 - Agendar uma Internação\n 4 - Acessar Histórico de Consultas\n 5 - Cadastrar um Plano de Saúde\n 6 - Mostrar Pacientes\n 7 - Sair\n");
         choice2=scan.nextInt();
         switch (choice2) {
             case 1 -> cadastroPaciente.cadastroPaciente();
@@ -67,11 +67,13 @@ public class App {
             case 3 -> System.out.println("Agendar uma Internação");
             case 4 -> System.out.println("Acessar Histórico de Consultas");
             case 5 -> System.out.println(" Cadastrar um Plano de Saúde");
-            case 6 -> {System.out.println("Saindo...");
+            case 6 -> cadastroPaciente.listarPacientes();
+            case 7 -> {System.out.println("Saindo...");
             isRunning=false; isChoosing=false;}
             default -> {System.out.println("Valor Invalido");}
     }
     }
+    scan.close();
 }
 }
 

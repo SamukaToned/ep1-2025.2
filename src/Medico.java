@@ -4,7 +4,6 @@ public class Medico extends Pessoa{
     private String crm;
     private double custoDaConsulta;
 
-    private String horarioDispon;
     private ArrayList<LocalTime> horarios = new ArrayList<>();
     private Especializacao especialidade;
     
@@ -12,15 +11,13 @@ public class Medico extends Pessoa{
         this.crm="";
         this.especialidade=null;
         this.custoDaConsulta=0;
-        this.horarioDispon="";
     }
 
-    public Medico(String nome, String cpf, String crm, Especializacao especialidade, double custoDaConsulta, String horarioDispon){
+    public Medico(String nome, String cpf, String crm, Especializacao especialidade, double custoDaConsulta){
         super(nome, cpf);
         this.crm=crm;
         this.especialidade=especialidade;
         this.custoDaConsulta=custoDaConsulta;
-        this.horarioDispon=horarioDispon;
     }
 
 
@@ -54,14 +51,12 @@ public class Medico extends Pessoa{
 
     @Override
     public String toString(){
-        return "***************\n" +
-        "Nome: " + getNome() +
+        return "Nome: " + getNome() +
         "\nCPF: " + getCpf() +
         "\nCRM" + getCrm() + 
         "\nEspecialidade" + getEspecialidade() + 
         "\nCusto de Consulta: R$" + custoDaConsulta + 
-        "\nHorários: " + horarioDispon +
-        "\n***************";
+        "\nHorários: De Segunda a Sexta:" + getHorarios();
     }
 }
 

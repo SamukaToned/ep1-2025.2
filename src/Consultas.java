@@ -2,60 +2,43 @@ import java.util.ArrayList;
 import java.time.LocalTime;
 import java.util.Scanner;
 public class Consultas {
-    private Medico medico;
     private Paciente paciente;
     private LocalTime horarioConsulta;
     private String local;
-    private int escolha;
     int status=0;
     Scanner scan = new Scanner(System.in);
     boolean isConsulting=true;
-    CadastroMedico cadastroMedico = new CadastroMedico();
-    CadastroPaciente cadastroPaciente = new CadastroPaciente();
+    CadastroMedico cadastroMedico;
+    CadastroPaciente cadastroPaciente;
+    public Consultas(CadastroPaciente cadastroPaciente, CadastroMedico cadastroMedico) {
+        this.cadastroPaciente = cadastroPaciente;
+        this.cadastroMedico = cadastroMedico;
+    }
     public void EscolhaConsultas(){
         boolean isChoosingconsulta = true;
-        int choosingconsulta;
+        ArrayList<Paciente> pacientes=cadastroPaciente.getPacientes();
         String cpf;
         while (isChoosingconsulta) {
+            if (pacientes.isEmpty()) {
+                System.out.printf("Nenhum paciente cadastrado ainda.\nVocê será redirecionado para o menu Pacientes para cadastrar um usuário.");
+                isChoosingconsulta=false;
+            }
             System.out.println("Digite seu CPF a seguir: ");
             cpf = scan.nextLine();
-            ArrayList<Paciente> pacientes=cadastroPaciente.getPacientes();
-            int valordeverificacao=0;
+            boolean cpfMatchs=false;
             for(Paciente paciente : pacientes){
-                if (cpf==paciente.getCpf()) {
-                valordeverificacao++;
-                while (isConsulting) {
-                System.out.println("Você deseja ter uma consulta em qual área?");
-                System.out.printf("\n1 - OFTAMOLOGIA\n2 - PEDIATRIA\n3 - DERMATOLOGIA\n4 - CARDIOLOGIA\n5 - PSIQUIATRIA\n6 - NEUROLOGIA\n7 - ORTOPEDIA\n");
-                System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n");
-                escolha = scan.nextInt();
-                ArrayList<Medico> medicos = cadastroMedico.getMedicos();
-                switch (escolha) {
-                    case 1 -> verificarMedicosEspecialidade(medicos, Especializacao.OFTAMOLOGIA, isChoosingconsulta);
-                    case 2 -> verificarMedicosEspecialidade(medicos, Especializacao.PEDIATRIA, isChoosingconsulta);
-                    case 3 -> verificarMedicosEspecialidade(medicos, Especializacao.DERMATOLOGIA, isChoosingconsulta);
-                    case 4 -> verificarMedicosEspecialidade(medicos, Especializacao.CARDIOLOGIA, isChoosingconsulta);
-                    case 5 -> verificarMedicosEspecialidade(medicos, Especializacao.PSIQUIATRIA, isChoosingconsulta);
-                    case 6 -> verificarMedicosEspecialidade(medicos, Especializacao.NEUROLOGIA, isChoosingconsulta);
-                    case 7 -> verificarMedicosEspecialidade(medicos, Especializacao.ORTOPEDIA, isChoosingconsulta);
-                    case 8 -> verificarMedicosEspecialidade(medicos, Especializacao.GASTROENTOLOGIA, isChoosingconsulta);
-                    case 9 -> verificarMedicosEspecialidade(medicos, Especializacao.GINECOLOGIA, isChoosingconsulta);
-                    case 10 -> verificarMedicosEspecialidade(medicos, Especializacao.ONCOLOGIA, isChoosingconsulta);
-                    case 11 -> verificarMedicosEspecialidade(medicos, Especializacao.UROLOGIA, isChoosingconsulta);
-                    case 12 -> verificarMedicosEspecialidade(medicos, Especializacao.ENDOCRINOLGIA, isChoosingconsulta);
-                    case 13 -> verificarMedicosEspecialidade(medicos, Especializacao.HEMATOLOGIA, isChoosingconsulta);
-                    default -> System.out.println("Valor Inválido");
-                    
-                }
-            }
-            
+                String cpfDigitado = cpf.replaceAll("[^0-9]", "");
+                String cpfPaciente = paciente.getCpf().replaceAll("[^0-9]", "");
+                if (cpfDigitado.equals(cpfPaciente)) {
+                    cpfMatchs=true;
+                    this.paciente=paciente;
+                    escolhaEspecialidades(1, false);
+                    isChoosingconsulta=false;
+                    break;
         }   else{
-                if(valordeverificacao==0){
-                    System.out.println("CPF errado ou Usuário não cadastrado. Deseja retornar a tela inicial? 0 - Sim / 1 - Não");
-                    choosingconsulta = scan.nextInt();
-                    if (choosingconsulta==0) {
-                        isChoosingconsulta=false;
-                    }
+                if(!cpfMatchs){
+                    System.out.printf("CPF errado ou Usuário não cadastrado.\nVocê será redirecionado para o menu Pacientes.");
+                    isChoosingconsulta=false;
                 }
             }
                 
@@ -63,7 +46,7 @@ public class Consultas {
         }
     }
  
-    private void verificarMedicosEspecialidade(ArrayList<Medico> medicos, Especializacao especialidade, boolean isChoosingconsulta){
+    private void verificarMedicosEspecialidade(ArrayList<Medico> medicos, Especializacao especialidade, boolean isChoosingconsulta, boolean isConsulting){
         boolean isFound = false;
         boolean temHorarios = true;
         while (temHorarios) {
@@ -79,8 +62,12 @@ public class Consultas {
                 } else{
                     System.out.println("Horários disponíveis:");
                     for (int i = 0; i < horarios.size(); i++) {
-                    System.out.println((i + 1) + " - " + horarios.get(i));
-                }
+                        System.out.println((i + 1) + " - " + horarios.get(i));
+                    }
+                    System.out.println("Escolha o número do horário desejado: ");
+                    int escolhaHorario = scan.nextInt();
+                    scan.nextLine();
+                    horarioConsulta = horarios.get(escolhaHorario - 1);
                     isFound=true;
                     System.out.println("Realizando consulta com o " + medico.getNome());
                     AgendamentoConsulta agendamentoConsulta = new AgendamentoConsulta(paciente, medico, horarioConsulta, local, status);
@@ -88,6 +75,7 @@ public class Consultas {
                     System.out.println("Consulta realizada com sucesso.");
                     temHorarios=false;
                     isChoosingconsulta=false;
+                    isConsulting=false;
 
                 }
 
@@ -96,9 +84,36 @@ public class Consultas {
             }
             if (isFound==false) {
             System.out.println("Nenhum médico foi especialista da área de " + especialidade + " trabalha nesse hospital.");
+            temHorarios=false;
         }
         } 
         }
-                          
-    }
+    public void escolhaEspecialidades(int escolha, boolean isChoosingconsulta){
+        while (isConsulting) {
+                System.out.println("Você deseja ter uma consulta em qual área?");
+                System.out.printf("\n1 - OFTAMOLOGIA\n2 - PEDIATRIA\n3 - DERMATOLOGIA\n4 - CARDIOLOGIA\n5 - PSIQUIATRIA\n6 - NEUROLOGIA\n7 - ORTOPEDIA\n");
+                System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n14 - Sair");
+                escolha = scan.nextInt();
+                ArrayList<Medico> medicos = cadastroMedico.getMedicos();
+                    switch (escolha) {
+                    case 1 -> verificarMedicosEspecialidade(medicos, Especializacao.OFTAMOLOGIA, isChoosingconsulta, isConsulting);
+                    case 2 -> verificarMedicosEspecialidade(medicos, Especializacao.PEDIATRIA, isChoosingconsulta, isConsulting);
+                    case 3 -> verificarMedicosEspecialidade(medicos, Especializacao.DERMATOLOGIA, isChoosingconsulta, isConsulting);
+                    case 4 -> verificarMedicosEspecialidade(medicos, Especializacao.CARDIOLOGIA, isChoosingconsulta, isConsulting);
+                    case 5 -> verificarMedicosEspecialidade(medicos, Especializacao.PSIQUIATRIA, isChoosingconsulta, isConsulting);
+                    case 6 -> verificarMedicosEspecialidade(medicos, Especializacao.NEUROLOGIA, isChoosingconsulta, isConsulting);
+                    case 7 -> verificarMedicosEspecialidade(medicos, Especializacao.ORTOPEDIA, isChoosingconsulta, isConsulting);
+                    case 8 -> verificarMedicosEspecialidade(medicos, Especializacao.GASTROENTOLOGIA, isChoosingconsulta, isConsulting);
+                    case 9 -> verificarMedicosEspecialidade(medicos, Especializacao.GINECOLOGIA, isChoosingconsulta, isConsulting);
+                    case 10 -> verificarMedicosEspecialidade(medicos, Especializacao.ONCOLOGIA, isChoosingconsulta, isConsulting);
+                    case 11 -> verificarMedicosEspecialidade(medicos, Especializacao.UROLOGIA, isChoosingconsulta, isConsulting);
+                    case 12 -> verificarMedicosEspecialidade(medicos, Especializacao.ENDOCRINOLGIA, isChoosingconsulta, isConsulting);
+                    case 13 -> verificarMedicosEspecialidade(medicos, Especializacao.HEMATOLOGIA, isChoosingconsulta, isConsulting);
+                    case 14 -> isConsulting=false;
+                    default -> System.out.println("Valor Inválido");
+                    }
+                }
+            }
+    }                          
+    
 // falta ainda fazer coisa do plano de saude e o fim da consulta, não é tanto mais ainda quebrarei cabeça

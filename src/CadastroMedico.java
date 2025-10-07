@@ -7,26 +7,29 @@ public class CadastroMedico {
 
     public void cadastroMedico(){
         boolean isRegistering=true;
+
         while (isRegistering) {
-            String nome;
-            String cpf;
-            String crm;
+            String nome, cpf, crm, especialidadeValor;
             Especializacao especialidade = null;
-            String especialidadeValor;
             double custo;
             String horario;
             int escolha;
+        
             int evitarSpaceNome=0;
             if (evitarSpaceNome!=0) {
                 scan.nextLine();
             }
+
             System.out.println("Digite a sequir o seguintes dados:");
             System.out.printf("Nome: ");
             nome=scan.nextLine();
+
             System.out.printf("\nCPF: ");
             cpf = scan.nextLine();
+
             System.out.printf("\nCRM: ");
             crm = scan.nextLine();
+
             boolean especialidadeisntValid = true;
             while (especialidadeisntValid) {
                 System.out.printf("\nEspecialidade: ");
@@ -41,17 +44,28 @@ public class CadastroMedico {
                     }
                 }
             }
-            System.out.printf("\nCusto da Consulta: ");
+
+            System.out.print("Custo da Consulta: ");
             custo = scan.nextDouble();
             scan.nextLine();
-            System.out.printf("\nHorarios: (Digite 0 quando acabar os horários.)");
-            do {
+
+            Medico medico = new Medico(nome, cpf, crm, especialidade, custo);
+            System.out.printf("\nHorarios: (0 para encerrar)");
+            while (true) {
                 horario=scan.nextLine();
-                medico.adicionarHorario(horario);
-            }while (horario!="0");
-            this.medicos.add(new Medico(nome, cpf, crm, especialidade, custo, horario));
+                if (horario.equals("0"))break;
+                try{
+                    medico.adicionarHorario(horario);
+                } catch (Exception e){
+                    System.out.println("Formato inválido, utilize o formato HH:MM");
+                }
+            };
+
+            this.medicos.add(medico);
+
             System.out.println("Você deseja continuar? 0 - Sim / 1 - Não");
             escolha = scan.nextInt();
+            
             evitarSpaceNome++;
             if (escolha==1) {
                 isRegistering=false;

@@ -12,4 +12,14 @@ public class Paciente extends Pessoa {
     int getIdade(){
         return idade;
     }
+
+    @Override
+    public String toString(){
+        return "***************\n" +
+        "Nome: " + getNome() +
+        "\nCPF: " + getCpf() +
+        "\nIdade" + getIdade() +
+        "\n***************";
+    }
 }
+
