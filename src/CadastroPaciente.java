@@ -5,6 +5,7 @@ public class CadastroPaciente {
     Paciente paciente = new Paciente();
     Scanner scan = new Scanner(System.in);
     private ArrayList<Paciente> pacientes = new ArrayList<>();
+    private ArrayList<PacienteEspecial> pacientesespeciais = new ArrayList<>();
 
     public void cadastroPaciente(){
         boolean isRegistering=true;
@@ -45,6 +46,10 @@ public class CadastroPaciente {
     public ArrayList<Paciente> getPacientes() {
         return pacientes;
     }
+    public ArrayList<PacienteEspecial> getPacienteEspeciais(){
+        return pacientesespeciais;
+    }
+    
     public void listarPacientes(){
         System.out.println("Esses são os pacientes cadastrados: ");
         for(Paciente paciente : pacientes){

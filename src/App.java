@@ -5,6 +5,7 @@ public class App {
     static CadastroMedico cadastroMedico = new CadastroMedico();
     static CadastroPaciente cadastroPaciente = new CadastroPaciente();
     static Consultas consultas = new Consultas(cadastroPaciente, cadastroMedico);
+    static CadastroPlanodeSaude cadastroPlanodeSaude = new CadastroPlanodeSaude();
     public static void main(String[] args){
         int choice1;
         int choice2=0;
@@ -26,13 +27,17 @@ public class App {
         }
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Digite um número inteiro.");
+            scan.nextLine();
+        } catch(Exception e){
+            System.out.println("Houve um erro inesperado: " + e.getMessage());
         }
 
     }
     public static void menuMedico(boolean isRunning, int choice2){
     boolean isChoosing=true;
     while (isChoosing) {
-        System.out.println("*************");
+        try{
+            System.out.println("*************");
         System.out.println("Menu Medico");
         System.out.println("*************");
         System.out.println("Digite o que deseja fazer:");
@@ -49,31 +54,38 @@ public class App {
             isRunning=false; isChoosing=false;}
             default -> {System.out.println("Valor Inválido");}
             }
+        }catch(InputMismatchException e){
+            
+        }
     
         }
     }
     public static void menuPaciente(boolean isRunning, int choice2){
     boolean isChoosing=true;
     while (isChoosing) {
-        System.out.println("*************");
-        System.out.println("Menu Paciente");
-        System.out.println("*************");
-        System.out.println("Digite o que deseja fazer:");
-        System.out.printf("1 - Cadastro\n 2 - Realizar uma Consulta\n 3 - Agendar uma Internação\n 4 - Acessar Histórico de Consultas\n 5 - Cadastrar um Plano de Saúde\n 6 - Mostrar Pacientes\n 7 - Sair\n");
-        choice2=scan.nextInt();
-        switch (choice2) {
-            case 1 -> cadastroPaciente.cadastroPaciente();
-            case 2 -> consultas.EscolhaConsultas();
-            case 3 -> System.out.println("Agendar uma Internação");
-            case 4 -> System.out.println("Acessar Histórico de Consultas");
-            case 5 -> System.out.println(" Cadastrar um Plano de Saúde");
-            case 6 -> cadastroPaciente.listarPacientes();
-            case 7 -> {System.out.println("Saindo...");
-            isRunning=false; isChoosing=false;}
-            default -> {System.out.println("Valor Invalido");}
+        try{
+            System.out.println("*************");
+            System.out.println("Menu Paciente");
+            System.out.println("*************");
+            System.out.println("Digite o que deseja fazer:");
+            System.out.printf("1 - Cadastro\n 2 - Realizar uma Consulta\n 3 - Agendar uma Internação\n 4 - Acessar Histórico de Consultas\n 5 - Cadastrar um Plano de Saúde\n 6 - Mostrar Pacientes\n 7 - Sair\n");
+            choice2=scan.nextInt();
+            switch (choice2) {
+                case 1 -> cadastroPaciente.cadastroPaciente();
+                case 2 -> consultas.EscolhaConsultas();
+                case 3 -> System.out.println("Agendar uma Internação");
+                case 4 -> System.out.println("Acessar Histórico de Consultas");
+                case 5 -> cadastroPlanodeSaude.CadastroPlanoSaúde();
+                case 6 -> cadastroPaciente.listarPacientes();
+                case 7 -> {System.out.println("Saindo...");
+                isRunning=false; isChoosing=false;}
+                default -> {System.out.println("Valor Invalido");}
+            }
+        }catch(InputMismatchException e){
+            System.out.println("Entrada inválida. Digite um número inteiro.");
+            scan.nextLine();
+        }
     }
-    }
-    scan.close();
 }
 }
 
