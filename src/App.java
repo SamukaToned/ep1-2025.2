@@ -2,11 +2,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 public class App {
     static Scanner scan = new Scanner(System.in);
+
     static CadastroMedico cadastroMedico = new CadastroMedico();
     static CadastroPaciente cadastroPaciente = new CadastroPaciente();
-    static Consultas consultas = new Consultas(cadastroPaciente, cadastroMedico);
-    static CadastroPlanodeSaude cadastroPlanodeSaude = new CadastroPlanodeSaude();
     static GerenciamentoConsultas gerenciamentoConsultas = new GerenciamentoConsultas();
+    static Consultas consultas = new Consultas(cadastroPaciente, cadastroMedico, gerenciamentoConsultas.getconsultasCadastradas());
+    static CadastroPlanodeSaude cadastroPlanodeSaude = new CadastroPlanodeSaude();
     public static void main(String[] args){
         int choice1;
         int choice2=0;
@@ -46,7 +47,7 @@ public class App {
         choice2=scan.nextInt();
         switch (choice2) {
             case 1 -> cadastroMedico.cadastroMedico();
-            case 2 -> gerenciamentoConsultas.gerenciandoConsultas();
+            case 2 -> gerenciamentoConsultas.gerenciandoConsultas(cadastroMedico);
             case 3 -> System.out.println("Diagnosticos");
             case 4 -> System.out.println("Gerenciamento Internacoes");
             case 5 -> System.out.println("Relatorios");
@@ -78,7 +79,7 @@ public class App {
                 case 4 -> gerenciamentoConsultas.historicoConsultas();
                 case 5 -> cadastroPlanodeSaude.CadastroPlanoSaude();
                 case 6 -> cadastroPaciente.listarPacientes();
-                case 7 -> gerenciamentoConsultas.statusConsultas();
+                case 7 -> gerenciamentoConsultas.gerenciandoConsultas(cadastroMedico);
                 case 8 -> {System.out.println("Saindo...");
                 isRunning=false; isChoosing=false;}
                 default -> {System.out.println("Valor Invalido");}

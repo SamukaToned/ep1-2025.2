@@ -53,10 +53,10 @@ public class Medico extends Pessoa{
     public String toString(){
         return "Nome: " + getNome() +
         "\nCPF: " + getCpf() +
-        "\nCRM" + getCrm() + 
-        "\nEspecialidade" + getEspecialidade() + 
+        "\nCRM: " + getCrm() + 
+        "\nEspecialidade - " + getEspecialidade() + 
         "\nCusto de Consulta: R$" + custoDaConsulta + 
-        "\nHorários: De Segunda a Sexta:" + getHorarios();
+        "\nHorários: De Segunda a Sexta: " + getHorarios();
     }
 }
 

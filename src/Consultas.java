@@ -11,9 +11,11 @@ public class Consultas {
     boolean isConsulting=true;
     CadastroMedico cadastroMedico;
     CadastroPaciente cadastroPaciente;
-    public Consultas(CadastroPaciente cadastroPaciente, CadastroMedico cadastroMedico) {
+    private ArrayList<AgendamentoConsulta> consultascadastradas;
+    public Consultas(CadastroPaciente cadastroPaciente, CadastroMedico cadastroMedico, ArrayList<AgendamentoConsulta> consultascadastradas) {
         this.cadastroPaciente = cadastroPaciente;
         this.cadastroMedico = cadastroMedico;
+        this.consultascadastradas = consultascadastradas;
     }
     public void EscolhaConsultas(){
         boolean isChoosingconsulta = true;
@@ -34,19 +36,71 @@ public class Consultas {
                 if (cpfDigitado.equals(cpfPaciente)) {
                     cpfMatchs=true;
                     this.paciente=paciente;
-                    escolhaEspecialidades(false, pacientesespeciais);
+                    escolhaEspecialidades(pacientesespeciais);
                     isChoosingconsulta=false;
                     break;
                 }
             }
+            cpf=null;
             if(!cpfMatchs){
-                    System.out.printf("CPF errado ou Usuário não ");
+                    System.out.printf("CPF errado ou Usuário não cadastrado");
                     isChoosingconsulta=false;
                 }
         }
     }
+
+    public void escolhaEspecialidades(ArrayList<PacienteEspecial> pacientesespeciais){
+        int planoDeSaudecadastrado;
+        String id;
+        while (isConsulting) {
+                System.out.println("Você possui algum plano de saúde cadastrado? 0 - Sim / 1 - Não ");
+                planoDeSaudecadastrado=scan.nextInt();
+                scan.nextLine();
+                if (planoDeSaudecadastrado==0) {
+                    System.out.println("Insira o ID do plano a seguir:");
+                    id=scan.nextLine();
+                    boolean idMatches=false;
+                    for(PacienteEspecial pacienteEspecial : pacientesespeciais){
+                        String idDigitado = id.replaceAll("[^0-9]", "");
+                        String idPlano = pacienteEspecial.getIDPE().replaceAll("[^0-9]", "");
+                        if (idDigitado.equals(idPlano)) {
+                            idMatches=true;
+                            this.pacienteEspecial=pacienteEspecial;
+                            break;
+                        }else{
+                        if(!idMatches){
+                            System.out.printf("ID errado ou Plano de Saúde não cadastrado.\nVocê continuará o cadastro sem o plano.");
+                        }
+                        }           
+                
+                    }
+                }
+                    System.out.println("Você deseja ter uma consulta em qual área?");
+                    System.out.printf("\n1 - OFTAMOLOGIA\n2 - PEDIATRIA\n3 - DERMATOLOGIA\n4 - CARDIOLOGIA\n5 - PSIQUIATRIA\n6 - NEUROLOGIA\n7 - ORTOPEDIA\n");
+                    System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n");
+                    int escolha = scan.nextInt();
+                    scan.nextLine();
+                    ArrayList<Medico> medicos = cadastroMedico.getMedicos();
+                    switch (escolha) {
+                        case 1 -> verificarMedicosEspecialidade(medicos, Especializacao.OFTAMOLOGIA);
+                        case 2 -> verificarMedicosEspecialidade(medicos, Especializacao.PEDIATRIA);
+                        case 3 -> verificarMedicosEspecialidade(medicos, Especializacao.DERMATOLOGIA);
+                        case 4 -> verificarMedicosEspecialidade(medicos, Especializacao.CARDIOLOGIA);
+                        case 5 -> verificarMedicosEspecialidade(medicos, Especializacao.PSIQUIATRIA);
+                        case 6 -> verificarMedicosEspecialidade(medicos, Especializacao.NEUROLOGIA);
+                        case 7 -> verificarMedicosEspecialidade(medicos, Especializacao.ORTOPEDIA);
+                        case 8 -> verificarMedicosEspecialidade(medicos, Especializacao.GASTROENTOLOGIA);
+                        case 9 -> verificarMedicosEspecialidade(medicos, Especializacao.GINECOLOGIA);
+                        case 10 -> verificarMedicosEspecialidade(medicos, Especializacao.ONCOLOGIA);
+                        case 11 -> verificarMedicosEspecialidade(medicos, Especializacao.UROLOGIA);
+                        case 12 -> verificarMedicosEspecialidade(medicos, Especializacao.ENDOCRINOLGIA);
+                        case 13 -> verificarMedicosEspecialidade(medicos, Especializacao.HEMATOLOGIA);
+                        default -> System.out.println("Valor Inválido");
+                    }
+                }
+            }
  
-    private void verificarMedicosEspecialidade(ArrayList<Medico> medicos, Especializacao especialidade, boolean isChoosingconsulta, boolean isConsulting){
+    private void verificarMedicosEspecialidade(ArrayList<Medico> medicos, Especializacao especialidade){
         boolean isFound = false;
         boolean temHorarios = true;
         while (temHorarios) {
@@ -71,15 +125,15 @@ public class Consultas {
                     scan.nextLine();
                     horarioConsulta = horarios.get(escolhaHorario - 1);
                     isFound=true;
+                    local = "Escritório de " + medico.getNome();
                     System.out.println("Realizando consulta com o " + medico.getNome());
                     AgendamentoConsulta agendamentoConsulta = new AgendamentoConsulta(paciente, medico, horarioConsulta, local, status);
                     System.out.println(agendamentoConsulta);
                     System.out.println("O preço a se pagar da consulta será R$" + medico.getCustoDaConsulta());
+                    consultascadastradas.add(agendamentoConsulta);
                     System.out.println("Consulta agendada com sucesso.");
                     temHorarios=false;
-                    isChoosingconsulta=false;
-                    isConsulting=false;
-                    break;
+                    this.isConsulting=false;
 
                 }
 
@@ -92,56 +146,6 @@ public class Consultas {
         }
         } 
         }
-    public void escolhaEspecialidades(boolean isChoosingconsulta, ArrayList<PacienteEspecial> pacientesespeciais){
-        int planoDeSaudecadastrado;
-        String id;
-        while (isConsulting) {
-                System.out.println("Você possui algum plano de saúde cadastrado? 0 - Sim / 1 - Não ");
-                planoDeSaudecadastrado=scan.nextInt();
-                scan.nextLine();
-                if (planoDeSaudecadastrado==0) {
-                    System.out.println("Insira o ID do plano a seguir:");
-                    id=scan.nextLine();
-                    boolean idMatches=false;
-                    for(PacienteEspecial pacienteEspecial : pacientesespeciais){
-                String idDigitado = id.replaceAll("[^0-9]", "");
-                String idPlano = pacienteEspecial.getIDPE().replaceAll("[^0-9]", "");
-                if (idDigitado.equals(idPlano)) {
-                    idMatches=true;
-                    this.pacienteEspecial=pacienteEspecial;
-                    break;
-        }   else{
-                if(!idMatches){
-                    System.out.printf("ID errado ou Plano de Saúde não cadastrado.\nVocê continuará o cadastro sem o plano.");
-                }
-            }
-                
-            }
-                }
-                System.out.println("Você deseja ter uma consulta em qual área?");
-                System.out.printf("\n1 - OFTAMOLOGIA\n2 - PEDIATRIA\n3 - DERMATOLOGIA\n4 - CARDIOLOGIA\n5 - PSIQUIATRIA\n6 - NEUROLOGIA\n7 - ORTOPEDIA\n");
-                System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n14 - Sair\n");
-                int escolha = scan.nextInt();
-                scan.nextLine();
-                ArrayList<Medico> medicos = cadastroMedico.getMedicos();
-                    switch (escolha) {
-                    case 1 -> verificarMedicosEspecialidade(medicos, Especializacao.OFTAMOLOGIA, isChoosingconsulta, isConsulting);
-                    case 2 -> verificarMedicosEspecialidade(medicos, Especializacao.PEDIATRIA, isChoosingconsulta, isConsulting);
-                    case 3 -> verificarMedicosEspecialidade(medicos, Especializacao.DERMATOLOGIA, isChoosingconsulta, isConsulting);
-                    case 4 -> verificarMedicosEspecialidade(medicos, Especializacao.CARDIOLOGIA, isChoosingconsulta, isConsulting);
-                    case 5 -> verificarMedicosEspecialidade(medicos, Especializacao.PSIQUIATRIA, isChoosingconsulta, isConsulting);
-                    case 6 -> verificarMedicosEspecialidade(medicos, Especializacao.NEUROLOGIA, isChoosingconsulta, isConsulting);
-                    case 7 -> verificarMedicosEspecialidade(medicos, Especializacao.ORTOPEDIA, isChoosingconsulta, isConsulting);
-                    case 8 -> verificarMedicosEspecialidade(medicos, Especializacao.GASTROENTOLOGIA, isChoosingconsulta, isConsulting);
-                    case 9 -> verificarMedicosEspecialidade(medicos, Especializacao.GINECOLOGIA, isChoosingconsulta, isConsulting);
-                    case 10 -> verificarMedicosEspecialidade(medicos, Especializacao.ONCOLOGIA, isChoosingconsulta, isConsulting);
-                    case 11 -> verificarMedicosEspecialidade(medicos, Especializacao.UROLOGIA, isChoosingconsulta, isConsulting);
-                    case 12 -> verificarMedicosEspecialidade(medicos, Especializacao.ENDOCRINOLGIA, isChoosingconsulta, isConsulting);
-                    case 13 -> verificarMedicosEspecialidade(medicos, Especializacao.HEMATOLOGIA, isChoosingconsulta, isConsulting);
-                    case 14 -> isConsulting=false;
-                    default -> System.out.println("Valor Inválido");
-                    }
-                }
-            }
+    
     }                          
     

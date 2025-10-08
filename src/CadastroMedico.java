@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 public class CadastroMedico {
     Medico medico = new Medico();
     Scanner scan = new Scanner(System.in);
@@ -62,13 +63,25 @@ public class CadastroMedico {
 
             this.medicos.add(medico);
 
-            System.out.println("Você deseja continuar? 0 - Sim / 1 - Não");
-            escolha = scan.nextInt();
+            try {
+                    System.out.println("Você deseja continuar? 0 - Sim / 1 - Não");
+                    boolean escolhaCerta=false;
+                    while (!escolhaCerta) {
+                        escolha = scan.nextInt();
+                        if (escolha!=1 && escolha!=0) {
+                            System.out.println("Valor inválido, digite um inteiro entre 1 e 0.");
+                        }else{
+                            if (escolha==1) {
+                                isRegistering=false;
+                                escolhaCerta=true;
+                            }else evitarSpaceNome=1;
+                        }
+                    }
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Valor inválido, tem que ser inteiro.");
+                }
             
-            evitarSpaceNome++;
-            if (escolha==1) {
-                isRegistering=false;
-            }
         }   
     }
     public ArrayList<Medico> getMedicos() {
