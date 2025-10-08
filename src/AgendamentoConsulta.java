@@ -8,7 +8,7 @@ public class AgendamentoConsulta {
     private String local;
     private int status=0;
 
-    private static ArrayList<AgendamentoConsulta> consultas = new ArrayList<>();
+    private static ArrayList<AgendamentoConsulta> consultascadastradas = new ArrayList<>();
 
     public AgendamentoConsulta(Paciente paciente, Medico medico, LocalTime horario, String local, int status) {
         this.paciente = paciente;
@@ -17,13 +17,19 @@ public class AgendamentoConsulta {
         this.local = local;
         this.status = status;
     }
+    
+    public String gerenciamentoPaciente(){
+        return "Consulta com " + paciente.getNome() +
+                " às " + horario.getHour() + ":" + horario.getMinute() +
+                " em " + local + " possui o status de " + getStatus();
+    }
 
     public static void adicionarConsulta(AgendamentoConsulta consulta) {
-        consultas.add(consulta);
+        consultascadastradas.add(consulta);
     }
 
    public static ArrayList<AgendamentoConsulta> getConsultas() {
-        return consultas;
+        return consultascadastradas;
     }
 
     public Paciente getPaciente() {
@@ -56,4 +62,6 @@ public class AgendamentoConsulta {
                 " às " + horario.getHour() + ":" + horario.getMinute() +
                 " em " + local + " será analisada pelo médico.";
     }
+
+    
 }

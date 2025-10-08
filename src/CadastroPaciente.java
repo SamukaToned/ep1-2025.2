@@ -9,12 +9,12 @@ public class CadastroPaciente {
 
     public void cadastroPaciente(){
         boolean isRegistering=true;
+        int evitarSpaceNome=0;
         while (isRegistering) {
             String nome = "";
             String cpf = "";
             int idade = 0;
             int escolha;
-            int evitarSpaceNome=0;
             if (evitarSpaceNome==1) {
                 scan.nextLine();
             }

@@ -6,6 +6,7 @@ public class App {
     static CadastroPaciente cadastroPaciente = new CadastroPaciente();
     static Consultas consultas = new Consultas(cadastroPaciente, cadastroMedico);
     static CadastroPlanodeSaude cadastroPlanodeSaude = new CadastroPlanodeSaude();
+    static GerenciamentoConsultas gerenciamentoConsultas = new GerenciamentoConsultas();
     public static void main(String[] args){
         int choice1;
         int choice2=0;
@@ -45,7 +46,7 @@ public class App {
         choice2=scan.nextInt();
         switch (choice2) {
             case 1 -> cadastroMedico.cadastroMedico();
-            case 2 -> System.out.println("Gerenciamento de Consultas");
+            case 2 -> gerenciamentoConsultas.gerenciandoConsultas();
             case 3 -> System.out.println("Diagnosticos");
             case 4 -> System.out.println("Gerenciamento Internacoes");
             case 5 -> System.out.println("Relatorios");
@@ -68,16 +69,17 @@ public class App {
             System.out.println("Menu Paciente");
             System.out.println("*************");
             System.out.println("Digite o que deseja fazer:");
-            System.out.printf("1 - Cadastro\n 2 - Realizar uma Consulta\n 3 - Agendar uma Internação\n 4 - Acessar Histórico de Consultas\n 5 - Cadastrar um Plano de Saúde\n 6 - Mostrar Pacientes\n 7 - Sair\n");
+            System.out.printf("1 - Cadastro\n 2 - Realizar uma Consulta\n 3 - Agendar uma Internação\n 4 - Acessar Histórico de Consultas\n 5 - Cadastrar um Plano de Saúde\n 6 - Mostrar Pacientes\n 7 - Status de Consultas\n 8 - Sair\n");
             choice2=scan.nextInt();
             switch (choice2) {
                 case 1 -> cadastroPaciente.cadastroPaciente();
                 case 2 -> consultas.EscolhaConsultas();
                 case 3 -> System.out.println("Agendar uma Internação");
-                case 4 -> System.out.println("Acessar Histórico de Consultas");
-                case 5 -> cadastroPlanodeSaude.CadastroPlanoSaúde();
+                case 4 -> gerenciamentoConsultas.historicoConsultas();
+                case 5 -> cadastroPlanodeSaude.CadastroPlanoSaude();
                 case 6 -> cadastroPaciente.listarPacientes();
-                case 7 -> {System.out.println("Saindo...");
+                case 7 -> gerenciamentoConsultas.statusConsultas();
+                case 8 -> {System.out.println("Saindo...");
                 isRunning=false; isChoosing=false;}
                 default -> {System.out.println("Valor Invalido");}
             }

@@ -28,8 +28,8 @@ public class Consultas {
             System.out.println("Digite seu CPF a seguir: ");
             cpf = scan.nextLine();
             boolean cpfMatchs=false;
+            String cpfDigitado = cpf.replaceAll("[^0-9]", "");
             for(Paciente paciente : pacientes){
-                String cpfDigitado = cpf.replaceAll("[^0-9]", "");
                 String cpfPaciente = paciente.getCpf().replaceAll("[^0-9]", "");
                 if (cpfDigitado.equals(cpfPaciente)) {
                     cpfMatchs=true;
@@ -40,7 +40,7 @@ public class Consultas {
                 }
             }
             if(!cpfMatchs){
-                    System.out.printf("CPF errado ou Usuário não cadastrado.\nVocê será redirecionado para o menu Pacientes.");
+                    System.out.printf("CPF errado ou Usuário não ");
                     isChoosingconsulta=false;
                 }
         }
@@ -54,7 +54,6 @@ public class Consultas {
             if (medico.getEspecialidade()==especialidade) {
                 System.out.println("Médico disponível" + medico);
                 
-
                 ArrayList<LocalTime> horarios = medico.getHorarios();
                 if (horarios.isEmpty()) {
                     System.out.println("Sem horários disponíveis"); 
@@ -80,6 +79,7 @@ public class Consultas {
                     temHorarios=false;
                     isChoosingconsulta=false;
                     isConsulting=false;
+                    break;
 
                 }
 
@@ -120,7 +120,7 @@ public class Consultas {
                 }
                 System.out.println("Você deseja ter uma consulta em qual área?");
                 System.out.printf("\n1 - OFTAMOLOGIA\n2 - PEDIATRIA\n3 - DERMATOLOGIA\n4 - CARDIOLOGIA\n5 - PSIQUIATRIA\n6 - NEUROLOGIA\n7 - ORTOPEDIA\n");
-                System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n14 - Sair");
+                System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n14 - Sair\n");
                 int escolha = scan.nextInt();
                 scan.nextLine();
                 ArrayList<Medico> medicos = cadastroMedico.getMedicos();

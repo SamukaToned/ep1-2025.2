@@ -7,7 +7,7 @@ public class CadastroMedico {
 
     public void cadastroMedico(){
         boolean isRegistering=true;
-
+        int evitarSpaceNome=0;
         while (isRegistering) {
             String nome, cpf, crm, especialidadeValor;
             Especializacao especialidade = null;
@@ -15,7 +15,6 @@ public class CadastroMedico {
             String horario;
             int escolha;
         
-            int evitarSpaceNome=0;
             if (evitarSpaceNome!=0) {
                 scan.nextLine();
             }
@@ -45,12 +44,12 @@ public class CadastroMedico {
                 }
             }
 
-            System.out.print("Custo da Consulta: ");
+            System.out.printf("\nCusto da Consulta: ");
             custo = scan.nextDouble();
             scan.nextLine();
 
             Medico medico = new Medico(nome, cpf, crm, especialidade, custo);
-            System.out.printf("\nHorarios: (0 para encerrar)");
+            System.out.print("\nHorarios: (0 para encerrar)\n");
             while (true) {
                 horario=scan.nextLine();
                 if (horario.equals("0"))break;

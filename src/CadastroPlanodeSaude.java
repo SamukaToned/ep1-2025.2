@@ -11,7 +11,7 @@ public class CadastroPlanodeSaude {
     ArrayList<Paciente> pacientes = new ArrayList<>();
     Especializacao especialidade;
     ArrayList<Especializacao> especialidades = new ArrayList<>();
-    public void CadastroPlanoSaúde(){
+    public void CadastroPlanoSaude(){
         System.out.println("Digite seu CPF a seguir: ");
         cpf=scan.nextLine();
         boolean founded=false;
