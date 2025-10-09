@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.time.LocalTime;
 import java.util.Scanner;
 public class Consultas {
@@ -11,6 +12,7 @@ public class Consultas {
     boolean isConsulting=true;
     CadastroMedico cadastroMedico;
     CadastroPaciente cadastroPaciente;
+    
     private ArrayList<AgendamentoConsulta> consultascadastradas;
     public Consultas(CadastroPaciente cadastroPaciente, CadastroMedico cadastroMedico, ArrayList<AgendamentoConsulta> consultascadastradas) {
         this.cadastroPaciente = cadastroPaciente;
@@ -29,8 +31,8 @@ public class Consultas {
             }
             System.out.println("Digite seu CPF a seguir: ");
             cpf = scan.nextLine();
-            boolean cpfMatchs=false;
             String cpfDigitado = cpf.replaceAll("[^0-9]", "");
+            boolean cpfMatchs=false;
             for(Paciente paciente : pacientes){
                 String cpfPaciente = paciente.getCpf().replaceAll("[^0-9]", "");
                 if (cpfDigitado.equals(cpfPaciente)) {
@@ -41,12 +43,12 @@ public class Consultas {
                     break;
                 }
             }
-            cpf=null;
             if(!cpfMatchs){
-                    System.out.printf("CPF errado ou Usuário não cadastrado");
-                    isChoosingconsulta=false;
-                }
+                System.out.printf("CPF errado ou Usuário não cadastrado");
+                isChoosingconsulta=false;
+            }
         }
+        
     }
 
     public void escolhaEspecialidades(ArrayList<PacienteEspecial> pacientesespeciais){
@@ -54,9 +56,10 @@ public class Consultas {
         String id;
         while (isConsulting) {
                 System.out.println("Você possui algum plano de saúde cadastrado? 0 - Sim / 1 - Não ");
-                planoDeSaudecadastrado=scan.nextInt();
-                scan.nextLine();
-                if (planoDeSaudecadastrado==0) {
+                try{
+                    planoDeSaudecadastrado=scan.nextInt();
+                    scan.nextLine();
+                    if (planoDeSaudecadastrado==0) {
                     System.out.println("Insira o ID do plano a seguir:");
                     id=scan.nextLine();
                     boolean idMatches=false;
@@ -75,6 +78,11 @@ public class Consultas {
                 
                     }
                 }
+                }catch(InputMismatchException e){
+                    System.out.println("Digite valores inteiros.");
+                    scan.nextLine();
+                }
+                
                     System.out.println("Você deseja ter uma consulta em qual área?");
                     System.out.printf("\n1 - OFTAMOLOGIA\n2 - PEDIATRIA\n3 - DERMATOLOGIA\n4 - CARDIOLOGIA\n5 - PSIQUIATRIA\n6 - NEUROLOGIA\n7 - ORTOPEDIA\n");
                     System.out.printf("8 - GASTROENTOLOGIA\n9 - GINECOLOGIA\n10 - ONCOLOGIA\n11 - UROLOGIA\n12 - ENDOCRINOLGIA\n13 - HEMATOLOGIA\n");
@@ -106,7 +114,7 @@ public class Consultas {
         while (temHorarios) {
             for(Medico medico : medicos){
             if (medico.getEspecialidade()==especialidade) {
-                System.out.println("Médico disponível" + medico);
+                System.out.println("Médico disponível" + medico.getNome());
                 
                 ArrayList<LocalTime> horarios = medico.getHorarios();
                 if (horarios.isEmpty()) {
@@ -120,7 +128,8 @@ public class Consultas {
                     System.out.println("Escolha o número do horário desejado: ");
                     int escolhaHorario = scan.nextInt();
                     if (escolhaHorario < 1 || escolhaHorario > horarios.size()) {
-                    System.out.println("Escolha inválida!");
+                        System.out.println("Escolha inválida!");
+                        continue;
                     }
                     scan.nextLine();
                     horarioConsulta = horarios.get(escolhaHorario - 1);
@@ -131,7 +140,6 @@ public class Consultas {
                     System.out.println(agendamentoConsulta);
                     System.out.println("O preço a se pagar da consulta será R$" + medico.getCustoDaConsulta());
                     consultascadastradas.add(agendamentoConsulta);
-                    System.out.println("Consulta agendada com sucesso.");
                     temHorarios=false;
                     this.isConsulting=false;
 
@@ -143,6 +151,8 @@ public class Consultas {
             if (isFound==false) {
             System.out.println("Nenhum médico foi especialista da área de " + especialidade + " trabalha nesse hospital.");
             temHorarios=false;
+            this.isConsulting=false;
+
         }
         } 
         }

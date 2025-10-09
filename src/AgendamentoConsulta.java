@@ -2,14 +2,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AgendamentoConsulta {
-    private Paciente paciente;
+    private Paciente paciente = new Paciente();
     private Medico medico;
     private LocalTime horario;
     private String local;
     private int status=0;
 
     private static ArrayList<AgendamentoConsulta> consultascadastradas = new ArrayList<>();
-
     public AgendamentoConsulta(Paciente paciente, Medico medico, LocalTime horario, String local, int status) {
         this.paciente = paciente;
         this.medico = medico;
@@ -18,11 +17,6 @@ public class AgendamentoConsulta {
         this.status = status;
     }
     
-    public String gerenciamentoPaciente(){
-        return "Consulta com " + paciente.getNome() +
-                " às " + horario.getHour() + ":" + horario.getMinute() +
-                " em " + local + " possui o status de " + getStatus();
-    }
 
     public static void adicionarConsulta(AgendamentoConsulta consulta) {
         consultascadastradas.add(consulta);
@@ -55,6 +49,17 @@ public class AgendamentoConsulta {
     public void setStatus(int status) {
         this.status = status;
     }
+            
+    public void mostrarConsultas(){
+        if (getStatus()==1) {
+            System.out.println("Consulta com " + paciente.getNome() + " às " + horario.getHour() + ":" + horario.getMinute() + " em " + local + " possui o status de " + "Agendada");
+        } else if (getStatus()==2){
+            System.out.println("Consulta com " + paciente.getNome() + " às " + horario.getHour() + ":" + horario.getMinute() + " em " + local + " possui o status de " + "Concluída");
+        } else if(getStatus()==3){
+            System.out.println("Consulta com " + paciente.getNome() + " às " + horario.getHour() + ":" + horario.getMinute() + " em " + local + " possui o status de " + "Cancelada");
+        }
+    }
+    
 
     @Override
     public String toString() {
@@ -63,5 +68,4 @@ public class AgendamentoConsulta {
                 " em " + local + " será analisada pelo médico.";
     }
 
-    
 }

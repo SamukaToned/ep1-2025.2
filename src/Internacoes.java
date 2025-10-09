@@ -6,21 +6,27 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Internacoes {
-    private Paciente paciente;
-    private Medico medico;
-    private LocalDateTime dataEntrada;
     private String horaEntrada;
-    private String dataSaida;
     private int[] quarto= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private double custo;
+    private int quartoIndex;
     Scanner scan = new Scanner(System.in);
     CadastroMedico cadastroMedico;
     CadastroPaciente cadastroPaciente;
+    Paciente paciente;
+    Medico medico;
+    GerenciamentoInternacoes gerenciamentoInternacoes;
+    private LocalDateTime dataEntrada;
+    private int status;
+    private static ArrayList<Internacoes> internacoesfeitas = new ArrayList<>();
+    public Internacoes(CadastroMedico cadastroMedico, CadastroPaciente cadastroPaciente) {
+    this.cadastroMedico = cadastroMedico;
+    this.cadastroPaciente = cadastroPaciente;
+    }
 
     public void internacoes(){
+  
         boolean isChoosinginternacao = true;
         ArrayList<Paciente> pacientes=cadastroPaciente.getPacientes();
-        ArrayList<PacienteEspecial> pacientesespeciais = cadastroPaciente.getPacienteEspeciais();
         String cpf;
         while (isChoosinginternacao) {
             if (pacientes.isEmpty()) {
@@ -41,10 +47,10 @@ public class Internacoes {
                     break;
                 }
                 cpf=null;
-                if(!cpfMatchs){
-                    System.out.printf("CPF errado ou Usuário não cadastrado");
-                    isChoosinginternacao=false;
                 }
+            if(!cpfMatchs){
+                System.out.printf("CPF errado ou Usuário não cadastrado");
+                isChoosinginternacao=false;
             }
         }
 
@@ -78,35 +84,54 @@ public class Internacoes {
     }
 
     private void conclusaoMedicosInternacao(ArrayList<Medico> medicos, Especializacao especialidade){
-        boolean isFound = false;
-        boolean temHorarios = true;
-        while (temHorarios) {
+        boolean agendandoInternacao = true;
+        while (agendandoInternacao) {
+            boolean isFound = false;
             for(Medico medico : medicos){
             if (medico.getEspecialidade()==especialidade) {
-                System.out.println("Médico disponível" + medico);
-                System.out.println("O hospital possui 10 quartos disponíveis para internação.");    
-                System.out.println("De 1 a 10 escolha um deles para que ocorra a internação.");
-                String estadoQuarto;
-                for(int i = 0; i < 10; i++){
-                    if (this.quarto[i]==0) {
-                        estadoQuarto="Vazio";
-                    } else {
-                        estadoQuarto="Ocupado";
-                    }
-                    System.out.println("Quarto número " + i + " está " + estadoQuarto);
-                }
-                int quartos = scan.nextInt();
-                scan.nextLine();
-                if (quartos<1 || quartos>10) {
-                    System.out.println("Valor inválido, escolha entre 1 e 10.");
-                    return;
-                }
-                if (this.quarto[quartos]!=0) {
-                    System.out.println("Quarto já ocupado, escolha outro.");
-                    return;
-                }
-                this.quarto[quartos]=1;
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+                isFound=true;
+                System.out.println("Médico disponível" + medico.getNome());
+                escolhendoQuarto();
+                escolhendoHoraData();
+                System.out.println("O Médico será notificado, verificará o preço da internação e se a data está disponível.");
+                agendandoInternacao=false;
+            }
+                
+            }
+            if (isFound==false) {
+            System.out.println("Nenhum médico foi especialista da área de " + especialidade + " trabalha nesse hospital.");
+        }
+        } 
+    }
+
+    public void escolhendoQuarto(){
+        System.out.println("O hospital possui 10 quartos disponíveis para internação.");    
+        System.out.println("De 1 a 10 escolha um deles para que ocorra a internação.");
+        String estadoQuarto;
+        for(int i = 0; i < 10; i++){
+            if (this.quarto[i]==0) {
+                estadoQuarto="Vazio";
+            } else {
+                estadoQuarto="Ocupado";
+            }
+            System.out.println("Quarto número " + i + " está " + estadoQuarto);
+        }
+        int quartos = scan.nextInt();
+        scan.nextLine();
+        if (quartos<1 || quartos>10) {
+            System.out.println("Valor inválido, escolha entre 0 e 9.");
+            return;
+        }
+        if (this.quarto[quartos-1] != 0) {
+            System.out.println("Quarto já ocupado, escolha outro.");
+            return;
+        }
+        this.quarto[quartos-1] = 1;
+        this.quartoIndex=quartos-1;
+    }
+
+    public void escolhendoHoraData(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
                 DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
                 LocalDateTime dataInternacao = null;
                 String dataEntradaString;
@@ -118,28 +143,43 @@ public class Internacoes {
                         System.out.println("Digite o horário da Internação (HH:mm)");
                         System.out.println("O Hospital apenas faz internações agendadas entre os horários de 7:00 até 11:00 e 16:00 até 20:00 ");
                         horaEntrada = scan.nextLine();
-                        Double horaInt = Double.parseDouble(horaEntrada);
-                        if (horaInt<7||horaInt>11&&horaInt<16||horaInt>20) {
-                            System.out.println("O Hospital não faz internações nesse horário.");
-                        }
                         LocalTime hora = LocalTime.parse(horaEntrada, formatterHora);
-
+                        boolean horarioValido = (hora.isAfter(LocalTime.of(6, 59)) && hora.isBefore(LocalTime.of(11, 1))) ||
+                        (hora.isAfter(LocalTime.of(15, 59)) && hora.isBefore(LocalTime.of(20, 1)));
                         dataInternacao = LocalDateTime.of(data, hora);
+                        if (!horarioValido) {
+                            System.out.println("O hospital não faz internações nesse horário. Tente novamente entre 07:00–11:00 ou 16:00–20:00.");
+                            continue;
+                        }
 
                 }   catch (DateTimeParseException e) {
                         System.out.println("Data ou hora inválida. Tente novamente no formato dd/mm/yy e HH:mm.");
                 }
                 }
                 this.dataEntrada=dataInternacao;
-                System.out.println("O Médico será notificado e verificará o preço da internação e se a data está disponível.");
-            }
-                
-            }
-            if (isFound==false) {
-            System.out.println("Nenhum médico foi especialista da área de " + especialidade + " trabalha nesse hospital.");
-        }
-        } 
     }
-    
-
+    public void adicionarInternacao(Internacoes internacoes){
+        internacoesfeitas.add(internacoes);
+    }
+    public LocalDateTime getData(){
+        return dataEntrada;
+    }
+    public int getNumQuarto(){
+        return quartoIndex;
+    }
+    public void setStatusInternacao(int status) {
+        this.status = status;
+    }
+    public int getStatusInternacao(){
+        return status;
+    }
+    public void mostrarInternacoes(){
+        if (getStatusInternacao()==1) {
+            System.out.println("A internação com " + medico.getNome() + " para " + paciente.getNome() + " em " + getData() + " no quarto " + getNumQuarto() + " com o valor de R$" + gerenciamentoInternacoes.getValorInternacao() + " está agendada");
+        } else if (getStatusInternacao()==2){
+            System.out.println("A internação com " + medico.getNome() + " às " + getData()  + " no quarto " + getNumQuarto() + " com o valor de R$" + gerenciamentoInternacoes.getValorInternacao() +"está concluída");
+        } else if(getStatusInternacao()==3){
+            System.out.println("A internação com " + medico.getNome() + " às " + getData()  + " no quarto " + getNumQuarto() + " com o valor de R$" + gerenciamentoInternacoes.getValorInternacao() + "está cancelada");
+        }
+    }
 }

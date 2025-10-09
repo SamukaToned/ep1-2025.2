@@ -54,10 +54,12 @@ public class CadastroPaciente {
         if (paciente==null) {
             System.out.println("Nenhum paciente foi cadastrado.");
         } else{
+            System.out.println("-------------------------------------");
             System.out.println("Esses são os pacientes cadastrados: ");
             for(Paciente paciente : pacientes){
                 System.out.println(paciente);
             }
+            System.out.println("-------------------------------------");
         }
     }
 }

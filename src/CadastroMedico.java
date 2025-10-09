@@ -89,10 +89,12 @@ public class CadastroMedico {
     }
 
     public void listaMedicos(){
+        System.out.println("-------------------------------");
         System.out.println("Esses são os médicos cadastrados: ");
         for(Medico medico : medicos){
             System.out.println(medico);
         }
+        System.out.println("-------------------------------");
     }
 }
 //tem que testar ainda se funcionou, faça mais exceptions dps
