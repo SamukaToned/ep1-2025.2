@@ -10,7 +10,7 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 
 ## Dados do Aluno
 
-- **Nome completo:**Samuel Balbino Assunção
+- **Nome completo:** Samuel Balbino Assunção
 - **Matrícula:** 08933082182
 - **Curso:** Engenharias
 - **Turma:** 02
