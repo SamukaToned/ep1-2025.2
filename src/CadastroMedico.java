@@ -1,6 +1,11 @@
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalTime;
 public class CadastroMedico {
     Medico medico = new Medico();
     Scanner scan = new Scanner(System.in);
@@ -96,5 +101,26 @@ public class CadastroMedico {
         }
         System.out.println("-------------------------------");
     }
+    
+    private void salvarMedicoCSV(Medico medico) {
+    try (FileWriter writer = new FileWriter("medicos.csv", true)) {
+        List<String> horariosEmString = medico.getHorarios().stream()
+            .map(LocalTime::toString) 
+            .collect(Collectors.toList());
+        String horarios = String.join(";", horariosEmString); 
+
+        writer.append(medico.getNome()).append(",")
+              .append(medico.getCpf()).append(",")
+              .append(medico.getCrm()).append(",")
+              .append(medico.getEspecialidade().toString()).append(",")
+              .append(String.valueOf(medico.getCustoDaConsulta())).append(",")
+              .append(horarios).append("\n");
+
+        writer.flush();
+        System.out.println("Dados dos médicos cadastrados salvos em medicos.csv");
+    } catch (IOException e) {
+        System.out.println("Erro ao salvar dados no CSV: " + e.getMessage());
+    }
 }
-//tem que testar ainda se funcionou, faça mais exceptions dps
+    
+}

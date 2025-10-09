@@ -59,5 +59,3 @@ public class Medico extends Pessoa{
         "\nHorários: De Segunda a Sexta: " + getHorarios();
     }
 }
-
-//ainda terei de ver sobre tempo provavelmente

@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -51,15 +53,46 @@ public class AgendamentoConsulta {
     }
             
     public void mostrarConsultas(){
-        if (getStatus()==1) {
-            System.out.println("Consulta com " + paciente.getNome() + " às " + horario.getHour() + ":" + horario.getMinute() + " em " + local + " possui o status de " + "Agendada");
-        } else if (getStatus()==2){
-            System.out.println("Consulta com " + paciente.getNome() + " às " + horario.getHour() + ":" + horario.getMinute() + " em " + local + " possui o status de " + "Concluída");
-        } else if(getStatus()==3){
-            System.out.println("Consulta com " + paciente.getNome() + " às " + horario.getHour() + ":" + horario.getMinute() + " em " + local + " possui o status de " + "Cancelada");
+        if (consultascadastradas.isEmpty()) {
+            System.out.println("Nenhuma consulta foi agendada ainda.");
+            return;
         }
+        System.out.println("--------------------------------------");
+        System.out.println("Consultas cadastradas:");
+        for (AgendamentoConsulta consulta : consultascadastradas) {
+        String statusTexto = switch (consulta.getStatus()) {
+            case 1 -> "Agendada";
+            case 2 -> "Concluída";
+            case 3 -> "Cancelada";
+            default -> "Indefinido";
+        };
+        System.out.println("Consulta com " + consulta.getMedico().getNome()
+                + " para " + consulta.getPaciente().getNome()
+                + " às " + consulta.getHorario().getHour() + ":" + String.format("%02d", consulta.getHorario().getMinute())
+                + " em " + consulta.getLocal()
+                + " - Status: " + statusTexto);
+        }   
+        System.out.println("--------------------------------------");
+
     }
     
+    private static void salvarConsultaCSV(AgendamentoConsulta consulta) {
+        try (FileWriter writer = new FileWriter("consultas.csv", true)) {
+            writer.append(consulta.getPaciente().getNome()).append(",")
+                  .append(consulta.getPaciente().getCpf()).append(",")
+                  .append(consulta.getMedico().getNome()).append(",")
+                  .append(consulta.getMedico().getCrm()).append(",")
+                  .append(consulta.getMedico().getEspecialidade().toString()).append(",")
+                  .append(consulta.getHorario().toString()).append(",")
+                  .append(consulta.getLocal()).append(",")
+                  .append(String.valueOf(consulta.getStatus())).append("\n");
+
+            writer.flush();
+            System.out.println("Consulta salva no arquivo consultas.csv");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar consulta no CSV: " + e.getMessage());
+        }
+    }
 
     @Override
     public String toString() {

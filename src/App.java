@@ -49,7 +49,7 @@ public class App {
         System.out.println("Menu Medico");
         System.out.println("----------------");
         System.out.println("Digite o que deseja fazer:");
-        System.out.printf("1 - Cadastro\n2 - Gerenciamento de Consultas\n3 - Gerenciamento de Internacoes\n4 - Mostar Medicos\n5 - Voltar\n6 - Voltar\n");
+        System.out.printf("1 - Cadastro\n2 - Gerenciamento de Consultas\n3 - Gerenciamento de Internacoes\n4 - Mostar Medicos\n5 - Voltar\n");
         choice2=scan.nextInt();
         switch (choice2) {
             case 1 -> cadastroMedico.cadastroMedico();
@@ -76,7 +76,7 @@ public class App {
             System.out.println("Menu Paciente");
             System.out.println("----------------");
             System.out.println("Digite o que deseja fazer:");
-            System.out.printf("1 - Cadastro\n 2 - Realizar uma Consulta\n 3 - Agendar uma Internação\n 4 - Acessar Histórico de Consultas\n 5 - Cadastrar um Plano de Saúde\n 6 - Mostrar Pacientes\n 7 - Status de Consultas\n 8 - Status de Internação\n 9 - Voltar\n");
+            System.out.printf("1 - Cadastro\n2 - Realizar uma Consulta\n3 - Agendar uma Internação\n4 - Acessar Histórico de Consultas\n5 - Cadastrar um Plano de Saúde\n6 - Mostrar Pacientes\n7 - Status de Consultas\n8 - Status de Internação\n9 - Voltar\n");
             choice2=scan.nextInt();
             switch (choice2) {
                 case 1 -> cadastroPaciente.cadastroPaciente();
@@ -98,5 +98,3 @@ public class App {
     }
 }
 }
-
-//fazer coisa da exception e salvar arquivos

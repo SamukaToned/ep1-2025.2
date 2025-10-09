@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class GerenciamentoInternacoes {
     private Internacoes internacoes;
-    private ArrayList<Internacoes> internacoesfeitas = new ArrayList<>();
+    private ArrayList<Internacoes> internacoesfeitas = Internacoes.getInternacoesFeitas();
     Scanner scan = new Scanner(System.in);
     private CadastroMedico cadastroMedico;
     boolean gerenciandointernacoes=true;
@@ -25,7 +25,7 @@ public class GerenciamentoInternacoes {
                 String crmDigitado = crm.replaceAll("[^0-9]", "");
                 boolean crmMatchs=false;
                 for(Internacoes internacoes : internacoesfeitas){
-                    String crmMedico = internacoes.medico.getCrm().replaceAll("[^0-9]", "");
+                    String crmMedico = internacoes.getMedico().getCrm().replaceAll("[^0-9]", "");
                     if (crmMedico.equals(crmDigitado)) {
                         crmMatchs=true;
                         System.out.println("Você possui solicitações de Internação disponíveis com " + internacoes.paciente.getNome());
@@ -37,11 +37,11 @@ public class GerenciamentoInternacoes {
                             System.out.println("Defina o valor da internação: "); 
                             valorInternacao=scan.nextDouble();
                             this.valorInternacao=valorInternacao;
-                            System.out.println("A internação com " + internacoes.medico.getNome() + " para " + internacoes.paciente.getNome() + " em " + 
+                            System.out.println("A internação com " + internacoes.getMedico().getNome() + " para " + internacoes.getPaciente().getNome() + " em " + 
                             internacoes.getData() + " no quarto " + internacoes.getNumQuarto() + " com o valor de R$" + valorInternacao + " está agendada"); }
-                            case 2 -> System.out.println("A internação com " + internacoes.medico.getNome() + " para " + internacoes.paciente.getNome() + " às " + 
+                            case 2 -> System.out.println("A internação com " + internacoes.getMedico().getNome() + " para " + internacoes.getPaciente().getNome() + " às " + 
                             internacoes.getData() + " em " + internacoes.getNumQuarto() + " está concluída");
-                            case 3 -> System.out.println("A internação com " + internacoes.medico.getNome() + " para " + internacoes.paciente.getNome() + " às " + 
+                            case 3 -> System.out.println("A internação com " + internacoes.getMedico().getNome() + " para " + internacoes.getPaciente().getNome() + " às " + 
                             internacoes.getData() + " em " + internacoes.getNumQuarto() + " está cancelada");
         
                             default -> System.out.println("Algo deu errado.");
@@ -60,5 +60,5 @@ public class GerenciamentoInternacoes {
     public double getValorInternacao(){
         return valorInternacao;
     }
-    
+    //não tava funcionando a verificação do crm e eu não consegui resolver a tempo
 }

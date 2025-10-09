@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 public class Internacoes {
     private String horaEntrada;
     private int[] quarto= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -13,7 +15,7 @@ public class Internacoes {
     CadastroMedico cadastroMedico;
     CadastroPaciente cadastroPaciente;
     Paciente paciente;
-    Medico medico;
+    Medico medico = new Medico();
     GerenciamentoInternacoes gerenciamentoInternacoes;
     private LocalDateTime dataEntrada;
     private int status;
@@ -81,23 +83,29 @@ public class Internacoes {
             case 13 -> conclusaoMedicosInternacao(medicos, Especializacao.HEMATOLOGIA);
             default -> System.out.println("Valor Inválido");
                     }
+        internacoesfeitas.add(this);
+
     }
 
     private void conclusaoMedicosInternacao(ArrayList<Medico> medicos, Especializacao especialidade){
         boolean agendandoInternacao = true;
         while (agendandoInternacao) {
             boolean isFound = false;
-            for(Medico medico : medicos){
-            if (medico.getEspecialidade()==especialidade) {
-                isFound=true;
-                System.out.println("Médico disponível" + medico.getNome());
+            for (Medico medico : medicos) {
+            if (medico.getEspecialidade() == especialidade) {
+                isFound = true;
+                System.out.println("Médico disponível: " + medico.getNome() + " (CRM: " + medico.getCrm() + ")");
+                this.medico = medico;
+
                 escolhendoQuarto();
                 escolhendoHoraData();
-                System.out.println("O Médico será notificado, verificará o preço da internação e se a data está disponível.");
-                agendandoInternacao=false;
+                internacoesfeitas.add(this);
+                salvarInternacaoCSV(this);
+
+                System.out.println("O Médico será notificado, verificará o preço da internação e se a data está disponível");
+                return;
             }
-                
-            }
+        }
             if (isFound==false) {
             System.out.println("Nenhum médico foi especialista da área de " + especialidade + " trabalha nesse hospital.");
         }
@@ -106,7 +114,7 @@ public class Internacoes {
 
     public void escolhendoQuarto(){
         System.out.println("O hospital possui 10 quartos disponíveis para internação.");    
-        System.out.println("De 1 a 10 escolha um deles para que ocorra a internação.");
+        System.out.println("De 0 a 9 escolha um deles para que ocorra a internação.");
         String estadoQuarto;
         for(int i = 0; i < 10; i++){
             if (this.quarto[i]==0) {
@@ -158,8 +166,31 @@ public class Internacoes {
                 }
                 this.dataEntrada=dataInternacao;
     }
+
+    private static void salvarInternacaoCSV(Internacoes internacao) {
+    try (FileWriter writer = new FileWriter("internacoes.csv", true)) {
+        
+        writer.append(internacao.paciente.getNome()).append(",") 
+              .append(internacao.paciente.getCpf()).append(",") 
+              .append(internacao.medico.getNome()).append(",") 
+              .append(internacao.medico.getCrm()).append(",") 
+              .append(internacao.medico.getEspecialidade().toString()).append(",") 
+              .append(String.valueOf(internacao.getNumQuarto() + 1)).append(",")
+              .append(internacao.getData().toString()).append(",") 
+              .append(String.valueOf(internacao.getStatusInternacao())).append("\n");
+        writer.flush();
+        System.out.println("Internação salva no arquivo internacoes.csv");
+    } catch (IOException e) {
+        System.out.println("Erro ao salvar internação no CSV: " + e.getMessage());
+    }
+}
+    
+
     public void adicionarInternacao(Internacoes internacoes){
         internacoesfeitas.add(internacoes);
+    }
+    public static ArrayList<Internacoes> getInternacoesFeitas() {
+        return internacoesfeitas;
     }
     public LocalDateTime getData(){
         return dataEntrada;
@@ -173,6 +204,12 @@ public class Internacoes {
     public int getStatusInternacao(){
         return status;
     }
+    public Medico getMedico(){
+        return medico;
+    }
+    public Paciente getPaciente(){
+        return paciente;
+    }
     public void mostrarInternacoes(){
         if (getStatusInternacao()==1) {
             System.out.println("A internação com " + medico.getNome() + " para " + paciente.getNome() + " em " + getData() + " no quarto " + getNumQuarto() + " com o valor de R$" + gerenciamentoInternacoes.getValorInternacao() + " está agendada");
@@ -182,4 +219,5 @@ public class Internacoes {
             System.out.println("A internação com " + medico.getNome() + " às " + getData()  + " no quarto " + getNumQuarto() + " com o valor de R$" + gerenciamentoInternacoes.getValorInternacao() + "está cancelada");
         }
     }
+    
 }

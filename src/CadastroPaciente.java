@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.io.FileWriter;
+import java.io.IOException;
 public class CadastroPaciente {
     Paciente paciente = new Paciente();
     Scanner scan = new Scanner(System.in);
@@ -62,7 +64,21 @@ public class CadastroPaciente {
             System.out.println("-------------------------------------");
         }
     }
+    public void salvarPacienteCSV(Paciente paciente) {
+        try (FileWriter writer = new FileWriter("pacientes.csv", true)) { 
+            
+            writer.append(paciente.getNome()).append(";")
+                  .append(paciente.getCpf()).append(";")
+                  .append(String.valueOf(paciente.getIdade())).append("\n");
+            writer.flush();
+            System.out.println("Dados dos médicos cadastrados salvos em pacientes.csv");
+            
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar dados no CSV: " + e.getMessage());
+        }
+    }
+
+    
+    
 }
     
-
-//ta dando bosta em alguma coisa ai, da uma olhada, não sei se tá bom a consulta. 

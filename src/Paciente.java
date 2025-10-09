@@ -15,11 +15,11 @@ public class Paciente extends Pessoa {
 
     @Override
     public String toString(){
-        return "***************\n" +
+        return "---------------------------\n" +
         "Nome: " + getNome() +
         "\nCPF: " + getCpf() +
         "\nIdade: " + getIdade() +
-        "\n***************";
+        "\n---------------------------";
     }
 }
 
