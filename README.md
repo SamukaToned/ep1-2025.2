@@ -10,7 +10,7 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 
 ## Dados do Aluno
 
-- **Nome completo:**[Samuel Balbino Assunção
+- **Nome completo:** Samuel Balbino Assunção
 - **Matrícula:** 08933082182
 - **Curso:** Engenharias
 - **Turma:** 02
@@ -20,56 +20,54 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 ## Instruções para Compilação e Execução
 
 1. **Compilação:**  
-   [Descrever aqui como compilar o projeto. Exemplo: `javac Main.java` ou o script usado]
+   Dentro da pasta src 
+   1° javac App.java 2° App.java -encoding UTF-8
+   cd C:\Users\Samuel\ep1-2025.2\src\App.java
+   
+3. **Execução:**  
+   Dentro da pasta src
+   java App
 
-2. **Execução:**  
-   [Descrever aqui como executar o projeto. Exemplo: `java Main` ou o script usado]
-
-3. **Estrutura de Pastas:**  
-   [Descrever aqui as principais pastas do projeto]
+4. **Estrutura de Pastas:**  
+   src - Arquivos.java e arquvos csv
 
 3. **Versão do JAVA utilizada:**  
-   [Descrever aqui como versão do JAVA utilizada no projeto. Sugestão: `java 21`]
+   Java 17
 
 ---
 
 ## Vídeo de Demonstração
 
-- [Inserir o link para o vídeo no YouTube/Drive aqui]
+- https://youtu.be/WBtcWYMIAN0
 
 ---
 
 ## Prints da Execução
 
 1. Menu Principal:  
-   (Prints/Menubase.png)
+   ![Inserir Print 1](caminho/do/print1.png)
 
 2. Cadastro de Médico:  
-   (Prints/CadastroMedico.png)
+   ![Inserir Print 2](caminho/do/print2.png)
 
-3. Cadastro de Paciente:  
-   (Prints/CadastroPaciente.png)
+3. Relatório de ?:  
+   ![Inserir Print 3](caminho/do/print3.png)
 
 4. Menu Paciente:
-   (Prints/Menupaciente.png)
+    ![Inserir Print 4](Prints/Menupaciente.png)
 
 5. Menu Médico:
-   (Prints/Menumédico.png)
-
----
-
----
-
+    ![Inserir Print 5](Prints/Menumédico.png)
+   
 ## Observações (Extras ou Dificuldades)
 
-- [Espaço para o aluno comentar qualquer funcionalidade extra que implementou, dificuldades enfrentadas, ou considerações importantes.]
+- Implementei separações no menu para pacientes e médicos e uma verificação de cpf e crm. De dificuldades tive principalmente envolvendo a implementação da verificação no internações e o uso de outras bibliotecas.
 
 ---
 
 ## Contato
 
-- [Opcional: E-mail pessoal do aluno.]
-
+samuelbalbino153@gmail.com
 ---
 
 ### 🖥️ Descrição do Sistema  
