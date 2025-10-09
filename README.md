@@ -42,13 +42,19 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 ## Prints da Execução
 
 1. Menu Principal:  
-   ![Inserir Print 1](caminho/do/print1.png)
+   (Prints/Menubase.png)
 
 2. Cadastro de Médico:  
-   ![Inserir Print 2](caminho/do/print2.png)
+   (Prints/CadastroMedico.png)
 
-3. Relatório de ?:  
-   ![Inserir Print 3](caminho/do/print3.png)
+3. Cadastro de Paciente:  
+   (Prints/CadastroPaciente.png)
+
+4. Menu Paciente:
+   (Prints/Menupaciente.png)
+
+5. Menu Médico:
+   (Prints/Menumédico.png)
 
 ---
 
