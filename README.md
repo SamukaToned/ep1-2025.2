@@ -22,7 +22,6 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 1. **Compilação:**  
    Dentro da pasta src 
    1° javac App.java 2° App.java -encoding UTF-8
-   cd C:\Users\Samuel\ep1-2025.2\src\App.java
    
 3. **Execução:**  
    Dentro da pasta src
